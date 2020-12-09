@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 启用aop,使用@AspectJ风格的切面声明 -->
+    <aop:aspectj-autoproxy expose-proxy="true"></aop:aspectj-autoproxy>
+    <!-- 开启注解配置,使Spring关注Annotation -->
+    <context:annotation-config />
+    <!-- 开启异步任务（同时开启定时器注解扫描） -->
+    <task:annotation-driven />
+    <!-- 在主容器中不扫描@Controller注解，在SpringMvc中只扫描@Controller注解 -->
+    <context:component-scan base-package="com.example.atomikosjtademo"><!-- base-package 如果多个，用“,”分隔 -->
+    </context:component-scan>
+
+    <!-- 1. 数据源配置 -->
+    <context:property-placeholder location="classpath:*.properties" file-encoding="utf8" />
+    <bean id="utf8" class="java.lang.String">
+        <constructor-arg value="utf-8"></constructor-arg>
+    </bean>
+
+    <!-- 引入Mybatis配置 -->
+    <!-- <import resource="spring-mybatis-atomikos-druid.xml"/> -->
+    <import resource="spring-mybatis-atomikos-druid.xml"/>
+</beans>
